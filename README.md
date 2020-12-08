@@ -109,11 +109,9 @@ For an example, see
 
 ### Pretrained model and tokenizer
 
-The following are steps for predicting qualities with a pretrained model. Input is an AMR parsed file, where AMRs are separated with empty lines.
-
 1. Download the [model weights](https://drive.google.com/file/d/1_OiMjLyAap6QbXmW5_xE_IQe9rrtp5AN/view?usp=sharing) and a [tokenizer](https://drive.google.com/file/d/1LYQt9QYOwg9qXZ11mUwaWb8jlY9O6n6s/view?usp=sharing). 
 
-2. Then see/adapt `example_predict.sh`. (Notes: Pretrained weights Only available for keras code at the moment, weights trained on v2)
+2. Then see/adapt above or `example_predict.sh`. (Notes: Pretrained weights Only available for keras code at the moment, weights trained on v2)
 
 ## Notes and (some) future possibilities for improvement/investigations
 
