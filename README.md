@@ -1,6 +1,6 @@
 # AMR quality rating with simple CNN encoder
 
-This project contains the simple AMR quality rating method that directly encodes **AMR-penman structure** to simulate a human annotator that inspects AMR graphs and rates their quality.
+This project contains the simple AMR quality rating method that directly encodes **AMR-penman structure** to simulate a human annotator that inspects AMR graphs and rates their quality. Generally, the encoder should work for any directed rooted graph.
 
 <img src="img/Screenshot_20201202_135927.png" width="45%">
 <img src="img/rater.png" width="35%">         
@@ -115,9 +115,8 @@ The following are steps for predicting qualities with a pretrained model. Input 
 
 2. Then see/adapt `example_predict.sh`. (Notes: Pretrained weights Only available for keras code at the moment, weights trained on v2)
 
-## Note and (some) future possibilities for improvement/investigations
+## Notes and (some) future possibilities for improvement/investigations
 
-* In principle **the encoder should work for any directed rooted graph**
 * use attention mechanism, more layers, different NxM 2Dconvolutions, etc...
 * predict other AMR quality aspects (**new** in larger data *AmrQuality-2*: predict wrong/correct triples)
 * incorporate word embeddings
