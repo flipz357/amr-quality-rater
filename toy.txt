@@ -1,0 +1,114 @@
+# ::snt A girl is styling her hair.
+# ::tok A girl is styling her hair .
+# ::lemma a girl be style she hair .
+# ::pos DT NN VBZ VBG PRP$ NN .
+# ::ner O O O O O O O
+# ::node    g0  girl    1-2
+# ::node    s1  style-01    3-4
+# ::node    h2  hair    5-6
+# ::edge    style-01    :ARG0   girl    s1  g0  
+# ::edge    style-01    :ARG1   hair    s1  h2  
+# ::edge    hair    :part-of    girl    h2  g0  
+(s1 / style-01
+    :ARG0 (g0 / girl
+        :part h2)
+    :ARG1 (h2 / hair))
+
+# ::id dummy-000
+# ::snt A girl is styling her hair.
+# ::tokens ["A", "girl", "is", "styling", "her", "hair", "."]
+# ::lemmas ["a", "girl", "be", "style", "she", "hair", "."]
+# ::pos_tags ["DT", "NN", "VBZ", "VBG", "PRP$", "NN", "."]
+# ::ner_tags ["O", "O", "O", "O", "O", "O", "O"]
+(c0 / style
+      :ARG0 (c2 / girl
+            :part (c1 / hair))
+      :ARG1 c1)
+
+# ::id 00-camr-test
+# ::snt For your defense and our own.
+(x3 / defend-01
+    :beneficiary (x4 / and))
+
+# ::id 00-camr-test-better
+# ::snt For your defense and our own.
+(x3 / defend-01
+    :beneficiary (a / and
+        :op1 (y / you)
+        :op2 (w / we)))
+
+# ::id 00-gold-test
+# ::snt For your defense and our own.
+(h / have-purpose-91
+    :ARG2 (a / and
+        :op2 (d2 / defend-01
+            :ARG1-of (o / own-01
+                :ARG0 (w / we))
+            :ARG1 w)        
+        :op1 (d / defend-01
+            :ARG1 (y / you))))
+
+# ::id 00-gpla-test
+# ::snt For your defense and our own.
+(a2 / and
+    :op2 (w3 / we
+       :ARG0-of (o4 / own-01))
+    :op1 (d1 / defend-01
+        :ARG1 (you / you)))
+
+# ::id 00-jamr-test
+# ::snt For your defense and our own.
+(w / we
+    :ARG1-of (d / defend-01
+        :op1-of (a / and)))
+
+# ::id 00-gold-test-distorted
+# ::snt But this defense is very useful for the soccer team and you.
+(h / have-purpose-91
+    :ARG2 (a / and
+        :op2 (d2 / defend-01
+            :ARG1-of (o / own-01
+                :ARG0 (w / we))
+            :ARG1 w)        
+        :op1 (d / defend-01
+            :ARG1 (y / you))))
+
+# ::id xx
+# ::snt Look!
+(l / look)
+
+# ::id xx
+# ::snt Look!
+(l / look
+    :mode "imperative")
+
+# ::id xx
+# ::snt Look!
+(l / look
+    :mode "interrogative")
+
+# ::id xx
+# ::snt Look!
+(l / look-01)
+
+# ::id xx
+# ::snt Look!
+(l / look-01
+    :mode "imperative")
+
+# ::id xx
+# ::snt Look!
+(l / look-01
+    :mode "imperative"
+    :ARG0 (y / you))
+
+# ::id xx
+# ::snt Look!
+(l / look-01
+    :mode "interrogative"
+    :ARG0 (y / you))
+
+# ::id xx
+# ::snt Look!
+(l / look-01
+    :mode "interrogative")

@@ -1,0 +1,6 @@
+{
+    "main": [
+        "Smatch -F1",
+        "Smatch -P",
+        "Smatch -R"
+    ]}
