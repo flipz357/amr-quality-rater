@@ -1,6 +1,6 @@
 # AMR quality rating with simple CNN encoder
 
-This project contains the simple AMR quality rating method that directly encodes **AMR-penman structure** to simulate a human annotator that inspects AMR graphs. In principle **the encoder should work for any directed rooted graph**.
+This project contains the simple AMR quality rating method that directly encodes **AMR-penman structure** to simulate a human annotator that inspects AMR graphs. In principle the *encoder should work for any directed rooted graph*.
 
 <img src="img/Screenshot_20201202_135927.png" width="45%">
 <img src="img/rater.png" width="35%">         
@@ -84,7 +84,7 @@ With pytorch code
 ./experiment-pt.sh
 ```
 
-Please make sure that the file pathes for `train.json`, `dev.json` and `test.json` are correctly written in these two scripts.
+Please make sure that the file pathes for `train.json`, `dev.json` and `test.json` are correctly set in these two scripts.
 
 ## Use a model to predict amr qualities for an amr file 
 
