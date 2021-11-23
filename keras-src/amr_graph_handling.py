@@ -1,8 +1,8 @@
 import logging
+from collections import defaultdict
 import re
 
 logger = logging.getLogger("amr utils")
-
 
 def add_2d_strings(jsondic, wikiopt="keep", senseopt="keep", reentrancyopt="rvn"):
 
@@ -32,7 +32,7 @@ def add_2d_strings(jsondic, wikiopt="keep", senseopt="keep", reentrancyopt="rvn"
                 )
 
         # the first indent level can be removed
-        tok = "\n".join([t.replace("+TAB+ ", "", 1).strip() for t in tok.split("\n")])    
+        #tok = "\n".join([t.replace("+TAB+ ", "", 1).strip() for t in tok.split("\n")])    
         
         # we save the new amr representation in our dict
         jsondic[key]["amr2d"] = tok
@@ -103,17 +103,25 @@ def handle_vars(amrlines, method="concept"):
 def simplify_names(amrlines):
     delis = []
     for i in range(len(amrlines)):
-        if ":name" in amrlines[i]:
-            ops =""
+        #if "name" in amrlines[i]:
+        #    print(amrlines[i])
+        #    asd
+        #if ":name" in amrlines[i]:
+        if re.search(r":name\s+name", amrlines[i]):
+            ops = ""
             for j, l in enumerate(amrlines[i+1:]):
-                if l.count("+TAB+") < amrlines[i].count("+TAB+"):
+                if l.count("+TAB+") != amrlines[i].count("+TAB+") + 1:
+                    break
+                if len(amrlines) > i + j + 2 and l.count("+TAB+") < amrlines[i+j+2].count("+TAB+"):
+                    break
+                if ":name" in l:
                     break
                 if re.match(r".*:op[0-9]+ ", l):
                     ops+=re.split(r":op[0-9]+ ", l)[1]+" "
-                    delis.append(i+j+1)
+                    delis.append(i + j + 1)
                 else:
-                    break
-            amrlines[i] = amrlines[i].replace(" name", " "+ops.strip())
+                    continue
+            amrlines[i] = amrlines[i].replace(" name", " " + ops.strip())
     new = [amrline for i, amrline in enumerate(amrlines) if i not in delis]
     return new
 
@@ -214,5 +222,49 @@ def preprocess_and_clean_amr(amrstring
             toks = toks + wikis
     toks = [t.strip() for t in toks]
     logger.debug("amr after advanced cleaning/formatting: {}".format("\n".join(toks)))
+    toks = [string for string in toks if string != "\n"]
     return "\n".join(toks)
+
+
+def parse_graph_from_formatted_amr(formatted_amr):
+    #print(formatted_amr)
+    lines = formatted_amr.split("\n")
+    src_dict = {0: lines[0]}
+    tc_old = 0
+    triples = []
+    line_idx = defaultdict(list)
+    line_idx[lines[0]] = [0]
+    for i, line in enumerate(lines[1:]):
+        i += 1
+        tc_tmp = line.count("+TAB+")
+        try:
+            tgt_tmp = line.split(":", 1)[1].split(" ", 1)[1]
+        except IndexError:
+            tgt_tmp = "NA"
+        if tgt_tmp and tgt_tmp[0] == ":":
+            tgt_tmp = "doppelpunkt_" + tgt_tmp.replace(":", "")
+        rel = ":" + line.split(":")[1].split(" ", 1)[0]
+        #print(src_dict, tc_tmp)
+        src_tmp = src_dict[tc_tmp - 1]
+        #src_tmp = src_dict[tc_tmp]
+        """
+        if not src_tmp:
+            print(formatted_amr)
+            asd
+        if not tgt_tmp:
+            print(formatted_amr)
+            asd
+        #if tc_tmp > tc_old:
+        """
+        triples.append((src_tmp, rel, tgt_tmp))
+        line_idx[tgt_tmp].append(i)
+
+        src_dict[tc_tmp] = tgt_tmp
+
+    triples.append(("ROOT", ":root", src_dict[0]))
+    
+    return triples, line_idx
+
+
+
 

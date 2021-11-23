@@ -114,10 +114,13 @@ def load_dat_no_target(filepath
     with open(filepath, encoding="utf-8") as f:
         amrs = [l for l in f.read().split("\n\n") if l]
     for i, amr in enumerate(amrs):
-        te["x_"+str(i)] = {
-                "amr":"\n".join([l for l in amr.split("\n") 
-                    if l and not l.startswith("#")])
-                , "snt":amr.split("::snt ")[1].split("\n")[0]}
+        try:
+            te["x_"+str(i)] = {
+                    "amr":"\n".join([l for l in amr.split("\n") 
+                        if l and not l.startswith("#")])
+                    , "snt":amr.split("::snt ")[1].split("\n")[0]}
+        except IndexError:
+            amr = "# ::snt " + amr
     nlp=spacy.load("en_core_web_sm")
     amr_helpers.add_2d_strings(te, wikiopt=wikiopt
             , senseopt=senseopt, reentrancyopt="rvn")
